@@ -6,7 +6,7 @@
  *       count  数据大小
  * 使用：<IconCount type="lights" count={lights} />
  */
-import React, {Component, PropTypes} from 'react'
+import React, {PureComponent, PropTypes} from 'react'
 import {View, Text, StyleSheet} from 'react-native'
 
 import {dp, theme, commonStyle} from '../commons/style'
@@ -21,7 +21,7 @@ const iconName = {
   'nps': 'ios-code',
 }
 
-class IconCount extends Component {
+class IconCount extends PureComponent {
   static propTypes = {
     size: PropTypes.number,
     color: PropTypes.string,

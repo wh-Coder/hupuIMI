@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {
   TouchableOpacity,
   TouchableHighlight,
@@ -10,7 +10,7 @@ import {
 import {dp, theme, commonStyle} from '../commons/style'
 import {IconCount} from '../components'
 
-class NewItem extends Component {
+class NewItem extends PureComponent {
 
   constructor(props) {
     super(props)

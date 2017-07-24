@@ -4,15 +4,18 @@ import {
   Text,
   View,
   Alert,
+  Modal,
+  Animated,
   ScrollView,
   TouchableOpacity,
   StyleSheet,
 } from 'react-native'
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import store from 'react-native-simple-store';
-
+import {dp, theme, commonStyle} from '../commons/style'
 import {ScrollTabBar, ScrollableTabBar} from '../components'
 import NewsListPage from './NewsListPage'
+import TabSelectPage from './TabSelectPage2'
 
 class NewsPage extends Component {
 
@@ -22,6 +25,7 @@ class NewsPage extends Component {
     super(props);
     this.state = {
       newsFollow: [],
+      showTabSelectPage: false,
     }
   }
 
@@ -34,11 +38,14 @@ class NewsPage extends Component {
         this.setState({newsFollow: [0, 1, 2, 3, 4, 7]})
       }, 100)
     })
+
   }
 
   addTabItem = () => {
     // Alert.alert('hello')
-    this.setState({newsFollow: [0, 1, 2, 3, 4, 5, 6, 7, 8]})
+    // 模拟选择完成之后
+    // this.setState({newsFollow: [0, 1, 2, 3, 4, 5, 6, 7, 8]})
+    this.setState({showTabSelectPage: true})
   }
 
   renderScrollTabView() {
@@ -50,12 +57,34 @@ class NewsPage extends Component {
             item = this.leagues[item]
             return (
               <View tabLabel={item.nav_name} style={styles.tabLabel} key={index}>
-                <NewsListPage en={item.en} navigate={this.props.navigate} />
+                <NewsListPage en={item.en} navigate={this.props.navigate}/>
               </View>
             )
           })
         }
       </ScrollableTabView>
+    )
+  }
+
+  _onCompleted(selected) {
+    this.setState({
+      newsFollow: selected,
+      showTabSelectPage: false
+    })
+  }
+
+  renderTabSelectPage() {
+    return (
+      <Modal
+        animationType={"slide"}
+        transparent={false}
+        visible={this.state.showTabSelectPage}>
+        <TabSelectPage
+          tabOptions={this.leagues}
+          tabSelected={this.state.newsFollow}
+          onCompleted={(selected) => this._onCompleted(selected)}
+        />
+      </Modal>
     )
   }
 
@@ -68,6 +97,7 @@ class NewsPage extends Component {
             ? this.renderScrollTabView()
             : null
         }
+        {this.renderTabSelectPage()}
       </View>
     )
   }

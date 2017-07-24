@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     left: 0,
   },
   headerTitle: {
-    fontSize: dp(40),
+    fontSize: dp(42),
     color: '#fff'
   },
   iconBox: {

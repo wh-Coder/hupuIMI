@@ -115,8 +115,8 @@ class NewsListPage extends Component {
   }
 
   _getData(isClearData) {
+    this.isClearData = isClearData
     if (isClearData) {
-      this.isClearData = isClearData
       this.nid = 0
     }
     switch (this.currentCat.cate_type) {
@@ -147,9 +147,7 @@ class NewsListPage extends Component {
     // 异步太慢, 双重保障
     if (!this.newsMoreLoading && !this.state.newsMoreLoading) {
       this.newsMoreLoading = true
-      this.setState({
-        newsMoreLoading: true
-      }, () => {
+      this.setState({newsMoreLoading: true}, () => {
         this._getData(false)
       })
     }
