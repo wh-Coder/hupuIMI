@@ -13,9 +13,9 @@ import {
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import store from 'react-native-simple-store';
 import {dp, theme, commonStyle} from '../commons/style'
-import {ScrollTabBar, ScrollableTabBar} from '../components'
+import {ScrollableTabBar2} from '../components'
 import NewsListPage from './NewsListPage'
-import TabSelectPage from './TabSelectPage2'
+import TabSelectPage from './TabSelectPage'
 
 class NewsPage extends Component {
 
@@ -42,7 +42,6 @@ class NewsPage extends Component {
   }
 
   addTabItem = () => {
-    // Alert.alert('hello')
     // 模拟选择完成之后
     // this.setState({newsFollow: [0, 1, 2, 3, 4, 5, 6, 7, 8]})
     this.setState({showTabSelectPage: true})
@@ -51,7 +50,7 @@ class NewsPage extends Component {
   renderScrollTabView() {
     return (
       <ScrollableTabView renderTabBar={() => (
-       <ScrollableTabBar prerenderingSiblingsNumber={1} addTabItem={this.addTabItem} />)}>
+       <ScrollableTabBar2 prerenderingSiblingsNumber={1} addTabItem={this.addTabItem} />)}>
         {
           this.state.newsFollow.map((item, index) => {
             item = this.leagues[item]
@@ -67,6 +66,7 @@ class NewsPage extends Component {
   }
 
   _onCompleted(selected) {
+    console.log(selected)
     this.setState({
       newsFollow: selected,
       showTabSelectPage: false

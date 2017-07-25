@@ -12,8 +12,10 @@ const DemoItems = [
   'ReduxDemo',
   'TouchDemo',
   'ScrollBarDemo',
-  'SpinDemo'
+  'SpinDemo',
+  'SortableDemo'
 ]
+
 
 const ItemContainer = ({index, route, navigate}) => (
   <TouchableOpacity onPress={() => navigate(route)}>
@@ -40,6 +42,21 @@ class Demos extends Component {
   }
 }
 
+import ReduxDemo from './ReduxDemo'
+import TouchDemo from './TouchDemo'
+import ScrollBarDemo from './ScrollBarDemo'
+import SpinDemo from './SpinDemo'
+import SortableDemo from './SortableDemo'
+
+export default DemoList = {
+  Demos: {screen: Demos},
+  ReduxDemo: {screen: ReduxDemo},
+  TouchDemo: {screen: TouchDemo},
+  ScrollBarDemo: {screen: ScrollBarDemo},
+  SpinDemo: {screen: SpinDemo},
+  SortableDemo: {screen: SortableDemo},
+}
+
 const styles = StyleSheet.create({
   container: {
     flex: 1
@@ -58,7 +75,6 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Demos
 
 
 

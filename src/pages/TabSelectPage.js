@@ -11,113 +11,135 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import _ from 'lodash'
-import SortableList from 'react-native-sortable-list';
+// import SortableList from 'react-native-sortable-list';
+import SortableListView from 'react-native-sortable-listview'
 import Icon from 'react-native-vector-icons/Ionicons';
 import {HeaderBar} from '../components'
 import {dp, theme, commonStyle} from '../commons/style'
 
-class TabSelectPage extends Component {
-
-  constructor(props) {
-    super(props)
-    this.tabOptions = Object.assign({}, this.props.tabOptions)
-
-    // 移动部分
-    this.nextOrder = this.props.tabSelected
-
-    this.state = {
-      order: this.props.tabSelected,
-      sortingEnabled: false,
-      notSelected: this.props.tabOptions,
-    }
-  }
-
-  _onCompleted() {
-    this.props.onCompleted(this.nextOrder)
-  }
-
-  _renderRow = ({key,data}) => {
+class RowComponent extends React.Component {
+  render() {
     return (
       <View style={[styles.rowBox,commonStyle.bottomLine]}>
-        <TouchableOpacity onPress={() => this._increase(key)} style={styles.rowBtn}>
+        <TouchableOpacity onPress={() => this.props.increase()} style={styles.rowBtn}>
           <Text style={styles.rowBtnTitle}>一</Text>
         </TouchableOpacity>
 
-        <Image style={styles.image} source={{uri: data.logo}}/>
-        <Text style={styles.rowTitle}>{data.nav_name}</Text>
+        <Image style={styles.image} source={{uri: this.props.data.logo}}/>
+        <Text style={styles.rowTitle}>{this.props.data.nav_name}</Text>
 
         <TouchableOpacity
-          onPressIn={() => this.setState({sortingEnabled: true})}
-          onPressOut={() => this.setState({sortingEnabled: false})}
+          {...this.props.sortHandlers}
           style={styles.sortableBar}>
           <Icon color={theme.fontColorPassive} size={dp(40)} name="ios-menu"/>
         </TouchableOpacity>
       </View>
     )
   }
+}
 
-  _renderFooter = () => {
+
+class TabSelectPage extends Component {
+
+  constructor(props) {
+    super(props)
+
+    let tabOptionsArr = this.props.tabOptions.concat()
+
+    this.props.tabSelected.map((item) => {
+      tabOptionsArr[item].selected = true
+    })
+
+    this.state = {
+      order: this.props.tabSelected,
+      tabOptionsArr: tabOptionsArr
+    }
+  }
+
+  _onCompleted() {
+    this.props.onCompleted(this.state.order)
+  }
+
+  _decrease(rowID) {
+    _.pull(this.state.order, rowID)
+    this.state.tabOptionsArr[rowID].selected = false
+    this.setState({
+      tabOptionsArr: this.state.tabOptionsArr,
+      order: this.state.order
+    })
+  }
+
+  _increase(rowID) {
+    console.log(rowID)
+    // this.setState({order: this.state.order.push(rowID)})
+    this.state.order.push(rowID)
+    this.state.tabOptionsArr[rowID].selected = true
+    this.setState({
+      tabOptionsArr: this.state.tabOptionsArr,
+      order: this.state.order
+    })
+  }
+
+  _onRowMoved = e => {
+    this.state.order.splice(e.to, 0, this.state.order.splice(e.from, 1)[0])
+    console.log(this.state.order)
+    this.forceUpdate()
+  }
+
+  renderCard(title) {
+    return (
+      <View style={styles.card}>
+        <Text style={styles.cardTitle}>{title}</Text>
+      </View>
+    )
+  }
+
+  renderFooter = () => {
     return (
       <View style={styles.notSelectedBox}>
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>未添加频道</Text>
-        </View>
+        {this.renderCard('未添加频道')}
         {
-          this.state.notSelected.map((item,index) => (
-            <View key={index} style={[styles.rowBox,commonStyle.bottomLine]}>
-              <Image style={styles.image} source={{uri: item.logo}}/>
-              <Text style={styles.rowTitle}>{item.nav_name}</Text>
+          this.state.tabOptionsArr.map((item, index) => {
+            console.log(item)
+            if (!item.selected) {
+              return (
+                <View key={index} style={[styles.rowBox,commonStyle.bottomLine]}>
+                  <Image style={styles.image} source={{uri: item.logo}}/>
+                  <Text style={styles.rowTitle}>{item.nav_name}</Text>
 
-              <View style={styles.sortableBar}>
-                <TouchableOpacity onPress={() => this._increase(key)} style={styles.rowBtn}>
-                  <Text style={styles.rowBtnTitle}>＋</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          ))
+                  <View style={styles.sortableBar}>
+                    <TouchableOpacity onPress={() => this._increase(index)} style={styles.rowBtn}>
+                      <Text style={styles.rowBtnTitle}>＋</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              )
+            }
+          })
         }
       </View>
     )
   }
 
-  _onChangeOrder(nextOrder) {
-    console.log(nextOrder)
-    this.nextOrder = nextOrder
-  }
-
-  _increase(key) {
-    console.log(key)
-    _.pull(this.nextOrder, key)
-    console.log(this.nextOrder)
-    this.setState({
-      order: this.nextOrder
-    })
-  }
-
   render() {
+    const tabOptionsObj = Object.assign({}, this.props.tabOptions)
+
     return (
       <View style={styles.container}>
         <HeaderBar title="自定义频道"/>
         <TouchableOpacity onPress={() => this._onCompleted()} style={styles.completed}>
           <Text style={styles.completedTitle}>完成</Text>
         </TouchableOpacity>
-        <ScrollView
-          scrollEnabled={!this.state.sortingEnabled}>
-          <View>
-            <View style={styles.card}>
-              <Text style={styles.cardTitle}>已添加频道</Text>
-            </View>
-            <SortableList
-              rowActivationTime={0}
-              data={this.tabOptions}
-              order={this.state.order}
-              onChangeOrder={(nextOrder) => this._onChangeOrder(nextOrder)}
-              scrollEnabled={false}
-              renderFooter={this._renderFooter}
-              sortingEnabled={this.state.sortingEnabled}
-              renderRow={this._renderRow}/>
-          </View>
-        </ScrollView>
+        <SortableListView
+          data={tabOptionsObj}
+          order={this.state.order}
+          renderFooter={this.renderFooter}
+          renderHeader={() => this.renderCard('已添加频道')}
+          onRowMoved={this._onRowMoved}
+          renderRow={(rowData, sectionID, rowID) => (
+            <RowComponent increase={() => this._decrease(rowID)} data={rowData} />
+          )}
+        />
       </View>
     )
   }
@@ -156,7 +178,7 @@ const styles = StyleSheet.create({
   },
 
   rowBox: {
-    flexDirection:'row',
+    flexDirection: 'row',
     height: dp(90),
     width: theme.screenWidth,
     paddingLeft: dp(30),
