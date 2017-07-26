@@ -5,9 +5,11 @@ import {StackNavigator} from 'react-navigation';
 import DemoList from '../demos'
 
 import HomePage from '../pages/HomePage'
+import WebViewPage from '../pages/WebViewPage'
 
 const RouteConfigs = {
   HomePage: {screen: HomePage},
+  WebViewPage: {screen: WebViewPage},
   ...DemoList,
 }
 

@@ -100,7 +100,6 @@ class TabSelectPage extends Component {
         {this.renderCard('未添加频道')}
         {
           this.state.tabOptionsArr.map((item, index) => {
-            console.log(item)
             if (!item.selected) {
               return (
                 <View key={index} style={[styles.rowBox,commonStyle.bottomLine]}>

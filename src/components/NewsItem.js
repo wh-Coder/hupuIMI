@@ -34,6 +34,8 @@ class NewItem extends PureComponent {
     let {onPress} = this.props
     let img = this._splitImgSrc(this.props.item)
 
+    // console.log(this.props.item)
+
     return (
       <TouchableHighlight
         style={[styles.container,commonStyle.bottomLine]}
@@ -81,7 +83,6 @@ const styles = StyleSheet.create({
   img: {
     width: dp(172),
     height: dp(130),
-    backgroundColor: theme.bgColorPassive,
     marginRight: dp(20)
   },
   imgBox: {

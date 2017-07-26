@@ -13,7 +13,7 @@ import {
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import store from 'react-native-simple-store';
 import {dp, theme, commonStyle} from '../commons/style'
-import {ScrollableTabBar2} from '../components'
+import {ScrollableTabBar} from '../components'
 import NewsListPage from './NewsListPage'
 import TabSelectPage from './TabSelectPage'
 
@@ -49,14 +49,18 @@ class NewsPage extends Component {
 
   renderScrollTabView() {
     return (
-      <ScrollableTabView renderTabBar={() => (
-       <ScrollableTabBar2 prerenderingSiblingsNumber={1} addTabItem={this.addTabItem} />)}>
+      <ScrollableTabView
+        onChangeTab={this.handleChangeTab}
+        renderTabBar={() => (
+          <ScrollableTabBar prerenderingSiblingsNumber={0} addTabItem={this.addTabItem} />)}>
         {
           this.state.newsFollow.map((item, index) => {
             item = this.leagues[item]
             return (
               <View tabLabel={item.nav_name} style={styles.tabLabel} key={index}>
-                <NewsListPage en={item.en} navigate={this.props.navigate}/>
+                <NewsListPage
+                  en={item.en}
+                  navigate={this.props.navigate}/>
               </View>
             )
           })
@@ -66,7 +70,7 @@ class NewsPage extends Component {
   }
 
   _onCompleted(selected) {
-    console.log(selected)
+    // console.log(selected)
     this.setState({
       newsFollow: selected,
       showTabSelectPage: false

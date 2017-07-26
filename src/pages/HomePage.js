@@ -10,6 +10,7 @@ import config from '../commons/config'
 import request from '../commons/request'
 
 import NewsPage from './NewsPage'
+import ForumsPage from './ForumsPage'
 
 const tabConfig = [{
   title: '新闻',
@@ -22,7 +23,7 @@ const tabConfig = [{
 }, {
   title: '社区',
   icon: 'chatboxes',
-  content: (navigate) => <View><Text>2</Text></View>
+  content: (navigate) => <ForumsPage navigate={navigate}/>
 }, {
   title: '装备',
   icon: 'basket',
@@ -38,7 +39,7 @@ class HomePage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      selectedTab: 0
+      selectedTab: 2
     }
   }
 
@@ -74,7 +75,7 @@ class HomePage extends Component {
                 renderIcon={() => <Icon name={`ios-${item.icon}-outline`} size={dp(50)} color={theme.fontColorPassive}/>}
                 renderSelectedIcon={() => <Icon name={`ios-${item.icon}`} size={dp(50)} color={theme.fontColorActive}/>}
                 onPress={() => this.setState({selectedTab: index})}>
-                {item.content(this.props.navigation)}
+                {item.content(this.props.navigation.navigate)}
               </TabNavigator.Item>
             )
           )}

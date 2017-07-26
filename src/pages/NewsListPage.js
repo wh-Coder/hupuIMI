@@ -44,7 +44,7 @@ class NewsListPage extends Component {
     return request.get(config.api.games + this.props.en + '/get' + type, {
       nid: this.nid,
     }).then((res) => {
-      console.log(res)
+      // console.log(res)
       // this.setState({newsCateLoading: false})
       this._handleNewsData(res)
     })
@@ -55,12 +55,13 @@ class NewsListPage extends Component {
       nid: this.nid,
       cate_id: this.cateId
     }).then((res) => {
-      console.log(res)
+      // console.log(res)
       this._handleNewsData(res)
     })
   }
 
   _handleNewsData(res) {
+    console.log(res)
     // 普通列表数据
     let newState = {data: []}
 
@@ -68,7 +69,9 @@ class NewsListPage extends Component {
     if (res.result.game && res.result.game.game_lists && res.result.game.game_lists.length !== 0) {
       newState.data.push({
         // 暂时只展示两个
-        gameLists: res.result.game.game_lists.slice(0, 2)
+        gameLists: res.result.game.game_lists.slice(0, 2),
+        // 用于区分比赛列表和新闻列表
+        nid: 0,
       })
     }
 
@@ -85,7 +88,7 @@ class NewsListPage extends Component {
     }
 
     // 目录导航
-    if (!this.state.cateList.length) {
+    if (res.result.cate_list) {
       newState.cateList = res.result.cate_list
     }
 
@@ -94,6 +97,8 @@ class NewsListPage extends Component {
 
     // 异步太慢双重保障
     this.newsMoreLoading = false
+
+    console.log(newState)
 
     this.setState({
       ...newState,
@@ -155,10 +160,31 @@ class NewsListPage extends Component {
 
   _gotoNewsWeb(item) {
     console.log(item)
+
+    let url = ''
+    switch (item.type){ // 1: 新闻, 3: 图片, 5: 帖子
+      case 1:
+        url = `http://lite.hupu.com/s?u=${this.props.en}/news/${item.nid}&type=${item.type}`
+        break;
+      case 3:
+        Alert.alert('图片集')
+        break;
+      case 5:
+        // "kanqiu://bbs/topic/19808948?entrance=6"
+        url = item.link
+        break;
+      default:
+        return
+    }
+
+    this.props.navigate('WebViewPage', {url})
   }
 
   _onRefresh() {
-    Alert.alert('_onRefresh')
+    // Alert.alert('_onRefresh')
+    this.setState({newsListLoading: true}, () => {
+      this._getData(true)
+    })
   }
 
   renderNewsList() {
