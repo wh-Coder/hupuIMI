@@ -13,9 +13,9 @@ import {
 import {dp, theme, commonStyle} from '../commons/style'
 import config from '../commons/config'
 import request from '../commons/request'
-import {SpinLoading, ScrollTabBar, NewsItem, GameLists} from '../components'
+import {SpinLoading, ScrollTabBar, NewsItem, GameLists, List} from '../components'
 
-class NewsListPage extends Component {
+class NewsListView extends Component {
 
   nid = 0
   cateId = 0
@@ -162,7 +162,7 @@ class NewsListPage extends Component {
     console.log(item)
 
     let url = ''
-    switch (item.type){ // 1: 新闻, 3: 图片, 5: 帖子
+    switch (item.type) { // 1: 新闻, 3: 图片, 5: 帖子
       case 1:
         url = `http://lite.hupu.com/s?u=${this.props.en}/news/${item.nid}&type=${item.type}`
         break;
@@ -189,34 +189,24 @@ class NewsListPage extends Component {
 
   renderNewsList() {
     return (
-      <View style={styles.listBox}>
-        <FlatList
-          showsVerticalScrollIndicator={false}
-          data={this.state.data}
-          keyExtractor={() => Math.random()}
-          onEndReachedThreshold={0.3}
-          onEndReached={() => this._onEndReached()}
-          renderItem={({item, index}) => {
-            return item.nid === 0
-              ? <GameLists gameLists={item.gameLists}/>
-              : <NewsItem onPress={() => this._gotoNewsWeb(item)} item={item} />
-          }}
-          refreshControl={<RefreshControl
-            refreshing={this.state.newsListRefreshing}
-            onRefresh={() => this._onRefresh()}
-            tintColor="#ff0000"
-            title="正在加载"
-            titleColor="#00ff00"
-            colors={['#ff0000', '#00ff00', '#0000ff']}
-            progressBackgroundColor="#ffff00"
-          />}
-        />
-        {this.state.newsMoreLoading && this.newsMoreLoading ? <SpinLoading size={dp(40)} fullScreen={false}/> : null}
-      </View>
+      <List
+        showsVerticalScrollIndicator={false}
+        data={this.state.data}
+        keyExtractor={() => Math.random()}
+        onEndReached={() => this._onEndReached()}
+        renderItem={({item, index}) => {
+          return item.nid === 0
+          ? <GameLists gameLists={item.gameLists}/>
+          : <NewsItem onPress={() => this._gotoNewsWeb(item)} item={item} />
+        }}
+        onRefresh={() => this._onRefresh()}
+        refreshing={this.state.newsListRefreshing}
+        moreLoading={this.state.newsMoreLoading && this.newsMoreLoading}
+      />
     )
   }
 
-  renderNewsListPage() {
+  renderNewsListView() {
     return (
       <View style={styles.container}>
         {this.renderNewsCate()}
@@ -228,7 +218,7 @@ class NewsListPage extends Component {
   render() {
     return (
       <View style={styles.container}>
-        {this.state.newsCateLoading ? <SpinLoading/> : this.renderNewsListPage()}
+        {this.state.newsCateLoading ? <SpinLoading/> : this.renderNewsListView()}
       </View>
     )
   }
@@ -265,4 +255,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default NewsListPage;
+export default NewsListView;

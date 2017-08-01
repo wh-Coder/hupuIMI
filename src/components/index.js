@@ -17,3 +17,5 @@ export {default as IconCount} from './IconCount'
 export {default as ShareModal} from './ShareModal'
 export {default as Mask} from './Mask'
 
+export {default as List} from './List'
+export {default as ThreadsItem} from './ThreadsItem'

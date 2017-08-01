@@ -10,20 +10,13 @@ import {
   View,
 } from 'react-native';
 
-import ScrollableTabView from 'react-native-scrollable-tab-view';
 import Icon from 'react-native-vector-icons/Ionicons'
 
 import {dp, theme, commonStyle} from '../commons/style'
 import request from '../commons/request'
 import config from '../commons/config'
 
-const defaultState = {
-  forumsData: [],
-  forumsIndex: 0,
-  forumsDetailData: [],
-}
-
-class ForumsPage extends Component {
+class ForumsPlateView extends Component {
 
   myRefs = {
     forumRightScroll: null
@@ -31,7 +24,11 @@ class ForumsPage extends Component {
 
   constructor(props) {
     super(props)
-    this.state = defaultState
+    this.state = {
+      forumsData: [],
+      forumsIndex: 0,
+      forumsDetailData: [],
+    }
   }
 
   componentDidMount() {
@@ -39,7 +36,7 @@ class ForumsPage extends Component {
   }
 
   _getForumsData() {
-    return request.get(config.api.bbs + 'forums/getForums')
+    request.get(config.api.bbs + 'forums/getForums')
       .then((res) => {
         if (res && res.data) {
           this.setState({
@@ -60,11 +57,12 @@ class ForumsPage extends Component {
     })
   }
 
-  _goToForumsPage(item) {
-    this.props.navigate('ForumsPage', {data: item})
+  _goToPlatePage(item) {
+    console.log(item)
+    this.props.navigate('PlatePage', {data: item})
   }
 
-  renderForumsListItem = ({item,index})  => (
+  renderForumsListItem = ({item, index}) => (
     <TouchableHighlight
       underlayColor={theme.bgColorDefault}
       style={index === this.state.forumsIndex ? styles.forumsBoxActive : null}
@@ -93,12 +91,12 @@ class ForumsPage extends Component {
   )
 
   renderForumsSubListItem = ({item}) => (
-    <TouchableOpacity style={styles.tableBox} onPress={this._goToForumsPage.bind(this,item)}>
+    <TouchableOpacity style={styles.tableBox} onPress={this._goToPlatePage.bind(this,item)}>
       <Image style={styles.tableLogo} source={{uri: item.logo}} resizeMode={'cover'}/>
       {
         item.name.length <= 6
           ? <Text style={styles.tableName}>{item.name}</Text>
-          : <Text style={styles.tableName}>{item.name.slice(0,5) + '...'}</Text>
+          : <Text style={styles.tableName}>{item.name.slice(0, 5) + '...'}</Text>
       }
       <View style={styles.tableCountBox}>
         <Icon name="ios-chatboxes" style={styles.tableCountIcon}/>
@@ -107,54 +105,30 @@ class ForumsPage extends Component {
     </TouchableOpacity>
   )
 
-  renderForumsList() {
+  render() {
     return (
-      <View tabLabel='板块' style={styles.listBox}>
-        <View style={styles.forumBox}>
-          <View style={styles.forumLeft}>
-            <FlatList
-              showsHorizontalScrollIndicator={false}
-              showsVerticalScrollIndicator={false}
-              data={this.state.forumsData}
-              extraData={[this.state.forumsData,this.state.forumsIndex]}
-              keyExtractor={(item) => item.fid}
-              renderItem={this.renderForumsListItem}/>
-          </View>
-          <View style={styles.forumRight}>
-            <FlatList
-              showsHorizontalScrollIndicator={false}
-              showsVerticalScrollIndicator={false}
-              ref={(forumRightScroll) => {this.myRefs.forumRightScroll = forumRightScroll}}
-              data={this.state.forumsDetailData}
-              extraData={this.state.forumsDetailData}
-              keyExtractor={(item) => item.weight}
-              renderItem={this.renderForumsSubList}
-            />
-          </View>
+      <View style={styles.forumBox}>
+        <View style={styles.forumLeft}>
+          <FlatList
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+            data={this.state.forumsData}
+            extraData={[this.state.forumsData,this.state.forumsIndex]}
+            keyExtractor={(item) => item.fid}
+            renderItem={this.renderForumsListItem}/>
+        </View>
+        <View style={styles.forumRight}>
+          <FlatList
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+            ref={(forumRightScroll) => {this.myRefs.forumRightScroll = forumRightScroll}}
+            data={this.state.forumsDetailData}
+            extraData={this.state.forumsDetailData}
+            keyExtractor={(item) => item.weight}
+            renderItem={this.renderForumsSubList}
+          />
         </View>
       </View>
-    )
-  }
-
-  renderRecommend() {
-    return (
-      <View tabLabel='推荐' style={styles.listBox}>
-
-      </View>
-    )
-  }
-
-  render() {
-    console.log('ForumsPage render')
-    return (
-      <ScrollableTabView
-        tabBarBackgroundColor='#fff'
-        tabBarActiveTextColor={theme.fontColorActive}
-        tabBarInactiveTextColor={theme.fontColorPassive}
-        tabBarUnderlineStyle={{backgroundColor: theme.fontColorActive}}>
-        {this.renderForumsList()}
-        {this.renderRecommend()}
-      </ScrollableTabView>
     )
   }
 }
@@ -164,9 +138,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  listBox: {
-    flex: 1
   },
   forumBox: {
     flex: 1,
@@ -234,4 +205,4 @@ const styles = StyleSheet.create({
   }
 });
 
-module.exports = ForumsPage;
+module.exports = ForumsPlateView;
