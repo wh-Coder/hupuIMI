@@ -146,7 +146,7 @@ class WebViewPage extends Component {
         type: 'threads',
         res: res
       }
-      console.log(data)
+      // console.log(JSON.stringify(data))
       // RN 和 webview 通信慢一点,太快了似乎处理不过来
       setTimeout(() => {
         this.myRefs.webView.postMessage(JSON.stringify(data));
@@ -165,7 +165,7 @@ class WebViewPage extends Component {
         res: res,
         page: this.postListPage
       }
-      console.log(data)
+      // console.log(data)
       this.myRefs.webView.postMessage(JSON.stringify(data));
     })
   }

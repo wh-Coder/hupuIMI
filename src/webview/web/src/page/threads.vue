@@ -29,7 +29,8 @@
 </template>
 
 <script>
-  import data from '../data/thread'
+  import thread from '../data/thread'
+  import reply from '../data/reply'
   import ThreadContent from '../components/threadContent'
   import Sticky from '../components/sticky'
   import Reply from '../components/reply'
@@ -44,18 +45,14 @@
     mounted() {
       let that = this
 
-//      console.log(data)
-//      this.thread = data[0].offline_data.data;
-//      this.lightReply = data[2].list;
-//      this.allReply = data[1].result.list
-//      this.allPage = data[1].result.all_page;
-
+//      that.thread = thread.res.offline_data.data;
+//      that.allReply = reply.res.result.list;
+//      that.allPage = reply.res.result.all_page;
 
       document.addEventListener('message', function (e) {
         let data = JSON.parse(e.data)
         switch (data.type) {
           case 'threads':
-//            that.test = '234'
             that.thread = data.res.offline_data.data;
             window.postMessage('threadOK');
             break;
@@ -98,6 +95,7 @@
     height 100%
     position relative
     font-family "宋体", Tahoma, Geneva, sans-serif, "苹方", "Droid Sans Fallback", "微软雅黑"
+    overflow hidden
     .title
       /*border-top 1px solid hpLine*/
       border-bottom 0.0.01rem solid hpLine

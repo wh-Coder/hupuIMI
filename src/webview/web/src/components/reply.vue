@@ -29,13 +29,14 @@
         let $content = $(this.$refs.content)
         if ($content.length){
           clearTimeout(timer)
-//          window.postMessage('log'+JSON.stringify($content));
-//          console.log( '$content' )
-//          console.log( $content )
+//          window.postMessage('log'+JSON.stringify($content[0].offsetWidth));
           $content.find('img').forEach((ele) => {
-            let width = ele.dataset.w > ($content[0].offsetWidth - 10 )? $content[0].offsetWidth : ele.dataset.w
-            ele.width = width - 10
-            ele.height = width / ele.dataset.w * ele.dataset.h
+            console.log(ele.dataset.w)
+            console.log($content)
+            console.log($content[0].clientWidth)
+            let width = ele.dataset.w > ($content[0].clientWidth - 20 ) ? ($content[0].clientWidth - 20) : ele.dataset.w
+            ele.style.width = width + 'px'
+            ele.style.height = width / ele.dataset.w * ele.dataset.h + 'px'
             ele.style.backgroundColor = '#ddd'
           })
         }
@@ -63,7 +64,7 @@
       border-radius 0.30rem
       background-color hpGray
     .info
-      flex 1
+      width 6.20rem
       margin-left 0.10rem
       .username
         color #000000
@@ -79,6 +80,8 @@
         color #000000
         font-size 0.32rem
         line-height 1.6
+        width 100%
+        overflow hidden
     .light
       position absolute
       top 0.20rem

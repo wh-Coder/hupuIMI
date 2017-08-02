@@ -15,7 +15,7 @@
       </div>
       <div class="bar-right">
         <!--<icon name="write" scale="2.5" style="padding: 0.08rem"></icon>-->
-        <img src="../svg/write.png" style="padding: 0.08rem" alt=""/>
+        <img src="../svg/write.png" class="write" alt=""/>
       </div>
     </div>
     <div v-show="isShowPicker" class="mask" @click="togglePicker"></div>
@@ -105,18 +105,29 @@
       position absolute
       top 0
       left 0.20rem
+      height 0.80rem
+      display flex
+      justify-content space-between
+      align-items center
       .updown
+        width 0.40rem
+        height 0.50rem
         color: hpGray
         vertical-align middle
       .recommend-num
         display inline-block
         color hpGray
-        margin-left -0.10rem
         vertical-align middle
     .bar-right
       position absolute
       top 0
       right 0.20rem
+      height 0.80rem
+      display flex
+      justify-content space-between
+      align-items center
+      .write
+        width 0.45rem
     .bar-center
       width 50%
       margin-left 25%

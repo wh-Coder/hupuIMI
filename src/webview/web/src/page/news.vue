@@ -74,7 +74,8 @@
     height 100%
     position relative
     font-family "宋体", Tahoma, Geneva, sans-serif, "苹方", "Droid Sans Fallback", "微软雅黑"
-    .title
+    overflow hidden
+  .title
       /*border-top 1px solid hpLine*/
       border-bottom 0.01rem solid hpLine
       border-left 0.10rem solid hpRed
