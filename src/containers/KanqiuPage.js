@@ -35,10 +35,9 @@ class KanqiuPage extends Component {
 
       // 模拟查找本地 follow
       setTimeout(() => {
-        this.setState({kanqiuFollow: [0, 1, 2, 3, 4, 7]})
+        this.setState({kanqiuFollow: [0, 1]})
       }, 100)
     })
-
   }
 
   renderScrollTabView() {

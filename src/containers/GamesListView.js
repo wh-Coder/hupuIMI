@@ -65,7 +65,6 @@ class GamesListView extends PureComponent {
   }
 
   renderSectionHeader = (info) => {
-    // console.log(info.section.date_block)
     return (
       <View style={styles.sectionHeaderBox}>
         <View style={styles.sectionSeparator}/>
@@ -115,7 +114,7 @@ const styles = StyleSheet.create({
   },
   stage: {
     color: theme.fontColorPassive,
-    fontSize: dp(0),
+    fontSize: dp(24),
     paddingLeft: dp(20),
     paddingTop: dp(10),
   },

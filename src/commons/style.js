@@ -23,7 +23,7 @@ export const commonStyle = StyleSheet.create({
     alignItems: 'center',
   },
   bottomLine: {
-    borderBottomColor: '#dddddd',
-    borderBottomWidth: 0.5
+    borderBottomColor: 'rgba(160,160,160,.1)',
+    borderBottomWidth: 1,
   }
 })

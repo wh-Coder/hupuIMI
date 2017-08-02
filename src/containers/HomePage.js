@@ -12,6 +12,7 @@ import request from '../commons/request'
 import NewsPage from './NewsPage'
 import ForumsPage from './ForumsPage'
 import KanqiuPage from './KanqiuPage'
+import MorePage from './MorePage'
 
 const tabConfig = [{
   title: '新闻',
@@ -32,7 +33,7 @@ const tabConfig = [{
 }, {
   title: '更多',
   icon: 'cube',
-  content: (navigate) => <View style={styles.unfinished}><Text>[更多]未完成</Text></View>
+  content: (navigate) => <MorePage navigate={navigate}/>
 }]
 
 class HomePage extends Component {
