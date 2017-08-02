@@ -97,11 +97,13 @@ class WebViewPage extends Component {
       }
       // 19644160.html
       this.tid = temp[temp.length - 1].split('.')[0]
-      if (Platform.OS === 'ios') {
-        this.source = require('../webview/thread/index.html')
-      } else {
-        this.source = {uri: 'file:///android_asset/thread/index.html'}
-      }
+
+      this.source = {uri: 'http://localhost:8080'}
+      // if (Platform.OS === 'ios') {
+      //   this.source = require('../webview/thread/index.html')
+      // } else {
+      //   this.source = {uri: 'file:///android_asset/thread/index.html'}
+      // }
 
       // http://lite.hupu.com/s?u=nba/news/2180154&type=1
     } else if (url.indexOf('news') > -1) {

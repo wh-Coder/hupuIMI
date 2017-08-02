@@ -13,7 +13,8 @@ const DemoItems = [
   'TouchDemo',
   'ScrollBarDemo',
   'SpinDemo',
-  'SortableDemo'
+  'SortableDemo',
+  'SectionListDemo'
 ]
 
 
@@ -47,6 +48,7 @@ import TouchDemo from './TouchDemo'
 import ScrollBarDemo from './ScrollBarDemo'
 import SpinDemo from './SpinDemo'
 import SortableDemo from './SortableDemo'
+import SectionListDemo from './SectionListDemo'
 
 export default DemoList = {
   Demos: {screen: Demos},
@@ -55,6 +57,7 @@ export default DemoList = {
   ScrollBarDemo: {screen: ScrollBarDemo},
   SpinDemo: {screen: SpinDemo},
   SortableDemo: {screen: SortableDemo},
+  SectionListDemo: {screen: SectionListDemo},
 }
 
 const styles = StyleSheet.create({

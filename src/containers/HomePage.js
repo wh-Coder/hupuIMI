@@ -11,6 +11,7 @@ import request from '../commons/request'
 
 import NewsPage from './NewsPage'
 import ForumsPage from './ForumsPage'
+import KanqiuPage from './KanqiuPage'
 
 const tabConfig = [{
   title: '新闻',
@@ -19,7 +20,7 @@ const tabConfig = [{
 }, {
   title: '看球',
   icon: 'basketball',
-  content: (navigate) => <View><Text>1</Text></View>
+  content: (navigate) => <KanqiuPage navigate={navigate} />
 }, {
   title: '社区',
   icon: 'chatboxes',
@@ -27,11 +28,11 @@ const tabConfig = [{
 }, {
   title: '装备',
   icon: 'basket',
-  content: (navigate) => <View><Text>3</Text></View>
+  content: (navigate) => <View style={styles.unfinished}><Text>[装备]未完成</Text></View>
 }, {
   title: '更多',
   icon: 'cube',
-  content: (navigate) => <View><Text>4</Text></View>
+  content: (navigate) => <View style={styles.unfinished}><Text>[更多]未完成</Text></View>
 }]
 
 class HomePage extends Component {
@@ -39,7 +40,7 @@ class HomePage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      selectedTab: 2
+      selectedTab: 1
     }
   }
 
@@ -91,6 +92,11 @@ const styles = StyleSheet.create({
   },
   scene: {
     backgroundColor: theme.bgColorDefault
+  },
+  unfinished: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 })
 

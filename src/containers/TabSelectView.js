@@ -26,7 +26,7 @@ class RowComponent extends React.Component {
         </TouchableOpacity>
 
         <Image style={styles.image} source={{uri: this.props.data.logo}}/>
-        <Text style={styles.rowTitle}>{this.props.data.nav_name}</Text>
+        <Text style={styles.rowTitle}>{this.props.data.nav_name ? this.props.data.nav_name : this.props.data.name}</Text>
 
         <TouchableOpacity
           {...this.props.sortHandlers}
@@ -104,7 +104,7 @@ class TabSelectPage extends Component {
               return (
                 <View key={index} style={[styles.rowBox,commonStyle.bottomLine]}>
                   <Image style={styles.image} source={{uri: item.logo}}/>
-                  <Text style={styles.rowTitle}>{item.nav_name}</Text>
+                  <Text style={styles.rowTitle}>{item.nav_name ? item.nav_name : item.name}</Text>
 
                   <View style={styles.sortableBar}>
                     <TouchableOpacity onPress={() => this._increase(index)} style={styles.rowBtn}>
