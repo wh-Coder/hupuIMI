@@ -14,7 +14,8 @@ const DemoItems = [
   'ScrollBarDemo',
   'SpinDemo',
   'SortableDemo',
-  'SectionListDemo'
+  'SectionListDemo',
+  'IconDemo'
 ]
 
 
@@ -29,10 +30,10 @@ const ItemContainer = ({index, route, navigate}) => (
 
 class Demos extends Component {
   render() {
-    const {navigate} = this.props.navigation
+    const {navigate,goBack} = this.props.navigation
     return (
       <View style={styles.container}>
-        <HeaderBar title='Demos' back={() => navigation.goBack()}/>
+        <HeaderBar title='Demos' back={() => goBack()}/>
         {
           DemoItems.map((item, index) => (
             <ItemContainer index={index} key={index} navigate={navigate} route={item}/>
@@ -49,6 +50,7 @@ import ScrollBarDemo from './ScrollBarDemo'
 import SpinDemo from './SpinDemo'
 import SortableDemo from './SortableDemo'
 import SectionListDemo from './SectionListDemo'
+import IconDemo from './IconDemo'
 
 export default DemoList = {
   Demos: {screen: Demos},
@@ -58,6 +60,7 @@ export default DemoList = {
   SpinDemo: {screen: SpinDemo},
   SortableDemo: {screen: SortableDemo},
   SectionListDemo: {screen: SectionListDemo},
+  IconDemo: {screen: IconDemo},
 }
 
 const styles = StyleSheet.create({

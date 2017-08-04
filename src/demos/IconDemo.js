@@ -6,6 +6,7 @@ import {
   Text,
   View,
 } from 'react-native';
+import {HeaderBar} from '../components'
 
 import Icon from 'react-native-vector-icons/Ionicons'
 
@@ -98,6 +99,7 @@ class IconCom extends Component {
   render() {
     return (
       <View style={{flex: 1}}>
+        <HeaderBar title="IconDemo" back={() => this.props.navigation.goBack()}/>
         <TextInput
           style={{height: 40, borderColor: 'gray', borderWidth: 1}}
           onChangeText={this.onChangeText}

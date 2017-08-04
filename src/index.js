@@ -21,14 +21,14 @@ import {Provider} from 'react-redux';
 import Store from './redux/configureStore';
 import Navigation from './navigation'
 
-// const Root = () => (
-//   <Provider store={Store()}>
-//     <Navigation />
-//   </Provider>
-// )
-
 const Root = () => (
-  <Navigation />
+  <Provider store={Store()}>
+    <Navigation />
+  </Provider>
 )
+
+// const Root = () => (
+//   <Navigation />
+// )
 
 AppRegistry.registerComponent('hupuIMI', () => Root);

@@ -19,3 +19,6 @@ export {default as Mask} from './Mask'
 
 export {default as List} from './List'
 export {default as ThreadsItem} from './ThreadsItem'
+
+export {default as InputText} from './InputText'
+

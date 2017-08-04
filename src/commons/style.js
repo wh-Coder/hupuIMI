@@ -9,10 +9,13 @@ export const theme = {
 
   // hupu 颜色值
   fontColorDefault: '#000',
+  fontColorDefaultOp: '#fff',
   fontColorActive: '#bd2d2d', // 189,45,45
+  fontColorActiveDeep: '#b52525',
   fontColorPassive: '#a0a0a0', //160,160,160
   fontColorLink: '#0081ec',
   bgColorPassive: '#edebe7',
+  bgColorPassiveDeep: '#dddbd7',
   bgColorDefault: '#fff',
 }
 

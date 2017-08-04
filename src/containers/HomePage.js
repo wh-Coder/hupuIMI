@@ -41,7 +41,7 @@ class HomePage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      selectedTab: 1
+      selectedTab: 4
     }
   }
 

@@ -45,6 +45,7 @@
     mounted() {
       let that = this
 
+//      mock 数据
 //      that.thread = thread.res.offline_data.data;
 //      that.allReply = reply.res.result.list;
 //      that.allPage = reply.res.result.all_page;
