@@ -2,6 +2,10 @@
 
 > 喜欢篮球的我用虎扑做练习, 看球编程两不误
 
+### 安卓安装包
+
+https://github.com/wh-Coder/hupuIMI/blob/master/hupuIMI.apk
+
 ### 本地开启项目
 
 npm install  // 根目录下, 下载 RN项目依赖
@@ -13,6 +17,10 @@ react-native run-ios/run-android  // 本地开启项目
 安卓用户需要:
 
 adb connect 127.0.0.1:6555  // 连接本地模拟器(天天6555, 海马玩26944)
+
+打包：
+cd android
+gradlew assembleRelease
 
 ### 目前完成
 
